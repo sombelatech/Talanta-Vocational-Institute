@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Apply Online | Talanta Vocational Institute</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .apply-shell { max-width: 980px; margin: 32px auto 60px; }
+    .form-card { background: #fff; border: 1px solid rgba(18, 18, 18, 0.08); border-radius: 18px; padding: 28px; box-shadow: 0 10px 30px rgba(12, 30, 51, 0.08); }
+    .success-box, .error-box { margin-bottom: 18px; padding: 14px 16px; border-radius: 12px; font-weight: 600; }
+    .success-box { background: #eafaf1; color: #0f5d39; border: 1px solid #bde8ce; }
+    .error-box { background: #ffe4e4; color: #8b1e1e; border: 1px solid #f0b8b8; }
+    .inline-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+    @media (max-width: 720px) { .inline-row { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<div id="topbarMount"></div>
+<div id="headerMount"></div>
+
+<div class="page-hero blueprint-bg">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Home</a> / <a href="admissions.html">Admissions</a> / Apply</div>
+    <h1>Online Application</h1>
+    <p>Please complete the form below to apply for your preferred programme.</p>
+  </div>
+</div>
+
+<section class="bg-white section-tight">
+  <div class="container apply-shell">
+    <div id="formMessage"></div>
+
+    <div class="form-card">
+      <form id="applicationForm">
+        <div class="inline-row">
+          <div>
+            <label for="name">Full name *</label>
+            <input id="name" name="name" type="text" required>
+
+            <label for="email">Email address *</label>
+            <input id="email" name="email" type="email" required>
+
+            <label for="phone">Phone number *</label>
+            <input id="phone" name="phone" type="tel" required>
+
+            <label for="program">Programme applying for *</label>
+            <input id="program" name="program" type="text" required>
+
+            <label for="qualification">Highest qualification</label>
+            <input id="qualification" name="qualification" type="text">
+          </div>
+
+          <div>
+            <label for="dob">Date of birth</label>
+            <input id="dob" name="dob" type="date">
+
+            <label for="address">Postal / home address</label>
+            <textarea id="address" name="address" rows="4"></textarea>
+
+            <label for="message">Personal statement / additional information</label>
+            <textarea id="message" name="message" rows="6"></textarea>
+          </div>
+        </div>
+
+        <div style="margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+          <button class="btn btn-gold" type="submit">Submit Application</button>
+          <a class="btn btn-ink" href="admissions.html">Back to Admissions</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script src="js/chrome.js"></script>
+<script>
+  const form = document.getElementById('applicationForm');
+  const formMessage = document.getElementById('formMessage');
+
+  function showMessage(type, text) {
+    formMessage.innerHTML = '<div class="' + (type === 'success' ? 'success-box' : 'error-box') + '">' + text + '</div>';
+  }
+
+  form.addEventListener('submit', async function (event) {
+    event.preventDefault();
+
+    const payload = {
+      name: document.getElementById('name').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      phone: document.getElementById('phone').value.trim(),
+      program: document.getElementById('program').value.trim(),
+      qualification: document.getElementById('qualification').value.trim(),
+      dob: document.getElementById('dob').value,
+      address: document.getElementById('address').value.trim(),
+      message: document.getElementById('message').value.trim()
+    };
+
+    if (!payload.name || !payload.email || !payload.phone || !payload.program) {
+      showMessage('error', 'Please complete all required fields before submitting.');
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/apply', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || 'Unable to submit your application right now.');
+      }
+
+      showMessage('success', data.message || 'Application submitted successfully.');
+      form.reset();
+    } catch (error) {
+      showMessage('error', error.message || 'Something went wrong. Please try again.');
+    }
+  });
+</script>
+</body>
+</html>

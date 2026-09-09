@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Apply &mdash; Talanta Vocational Institute</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="topbarMount"></div>
+<div id="headerMount"></div>
+<div class="page-hero blueprint-bg">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.php">Home</a> / Admissions / Apply</div>
+    <h1>Online Application</h1>
+    <p>Please complete the form below to apply. Fields marked * are required.</p>
+  </div>
+</div>
+
+<section class="bg-white section-tight">
+  <div class="container">
+        
+    <form method="post" enctype="multipart/form-data" class="admin-form">
+      <input type="hidden" name="csrf" value="e1501ed7e463ceb0df4d543871be8c19">
+      <div class="grid grid-2" style="gap:20px;">
+        <div>
+          <label>Full name *</label>
+          <input type="text" name="name" value="" required>
+          <label>Email address *</label>
+          <input type="email" name="email" value="" required>
+          <label>Phone number *</label>
+          <input type="text" name="phone" value="" required>
+          <label>Programme applying for *</label>
+          <input type="text" name="program" value="" required>
+          <label>Highest qualification</label>
+          <input type="text" name="qualification" value="">
+        </div>
+        <div>
+          <label>Date of birth</label>
+          <input type="date" name="dob" value="">
+          <label>Postal / Home address</label>
+          <textarea name="address"></textarea>
+          <label>Personal statement / Additional information</label>
+          <textarea name="message" rows="6"></textarea>
+          <label>Upload resume (optional, PDF/DOC)</label>
+          <input type="file" name="resume" accept=".pdf,.doc,.docx">
+        </div>
+      </div>
+      <div style="margin-top:16px;">
+        <button class="btn btn-gold" type="submit">Submit Application</button>
+        <a class="btn btn-ink" href="admissions.html">Back to Admissions</a>
+      </div>
+    </form>
+  </div>
+</section>
+
+<script src="js/chrome.js"></script>
+<script>
+// Client-side validation for nicer UX
+document.addEventListener('DOMContentLoaded', function(){
+  const form = document.querySelector('form[enctype]');
+  if (!form) return;
+  form.addEventListener('submit', function(e){
+    const name = form.querySelector('[name=name]').value.trim();
+    const email = form.querySelector('[name=email]').value.trim();
+    const phone = form.querySelector('[name=phone]').value.trim();
+    const program = form.querySelector('[name=program]').value.trim();
+    const resume = form.querySelector('[name=resume]');
+    let errors = [];
+    if (!name) errors.push('Full name is required.');
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push('Valid email is required.');
+    if (!phone) errors.push('Phone number is required.');
+    if (!program) errors.push('Programme is required.');
+    if (resume && resume.files && resume.files[0]) {
+      const f = resume.files[0];
+      if (f.size > 5 * 1024 * 1024) errors.push('Resume must be 5MB or smaller.');
+      const allowed = ['application/pdf','application/msword','application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+      if (allowed.indexOf(f.type) === -1) errors.push('Resume must be PDF or Word document.');
+    }
+    if (errors.length) {
+      e.preventDefault();
+      alert(errors.join('\n'));
+    }
+  });
+});
+</script>
+</body>
+</html>

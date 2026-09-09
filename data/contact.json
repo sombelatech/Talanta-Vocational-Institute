@@ -1,0 +1,23 @@
+{
+  "phone": "0767 42 41 20",
+  "phone2": "0713 42 41 20",
+  "whatsapp": "255767424120",
+  "email": "info@talanta.ac.tz",
+  "webmail": "https://talanta.ac.tz:2096/",
+  "emails": [
+    "admin@talanta.ac.tz",
+    "info@talanta.ac.tz",
+    "admissions@talanta.ac.tz",
+    "principal@talanta.ac.tz",
+    "ceo@talanta.ac.tz",
+    "academics@talanta.ac.tz"
+  ],
+  "address": "Mbagala Town, Mbagala Zakhem Commercial Area, Temeke District, Dar es Salaam",
+  "postal": "P.O. Box 13356, Dar es Salaam",
+  "office_hours": "Monday – Friday, 8:00 AM – 5:00 PM",
+  "facebook": "#",
+  "instagram": "#",
+  "linkedin": "#",
+  "youtube": "#",
+  "twitter": "#"
+}

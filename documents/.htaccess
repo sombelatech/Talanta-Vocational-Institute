@@ -1,0 +1,5 @@
+# Prevent script execution and directory listing
+Options -Indexes
+<FilesMatch "\.(php|phar|phtml|php3|php4|php5|pl|py|jsp|asp|aspx)$">
+    Require all denied
+</FilesMatch>

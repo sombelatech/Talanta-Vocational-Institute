@@ -139,6 +139,21 @@ function old($key) {
     <?php if ($flash): ?><div class="flash"><?= htmlspecialchars($flash) ?></div><?php endif; ?>
     <?php if (!empty($errors)): ?><div class="flash" style="background:#ffd6d6;color:#800;"><?php foreach($errors as $e) echo htmlspecialchars($e)."<br>"; ?></div><?php endif; ?>
 
+    <div style="margin-bottom:22px; padding:18px 20px; border:1px solid rgba(15,28,38,.08); border-radius:14px; background:#f8fafc;">
+      <h3 style="margin:0 0 8px;">Required Admission Documents</h3>
+      <p style="margin:0 0 10px;">Please ensure you have the following before completing the application:</p>
+      <ul style="margin:0 0 0 18px; padding:0; line-height:1.8;">
+        <li>National Identity Card or Birth Certificate</li>
+        <li>Academic certificates and transcript or latest school results</li>
+        <li>Recent passport-size photograph</li>
+        <li>Reference letter or recommendation where required</li>
+        <li>Curriculum Vitae / resume when requested</li>
+        <li>Proof of payment or fee receipt (if applicable)</li>
+        <li>Medical certificate for programmes requiring health clearance</li>
+        <li>Parent or guardian consent letter for underage applicants</li>
+      </ul>
+    </div>
+
     <form method="post" enctype="multipart/form-data" class="admin-form">
       <input type="hidden" name="csrf" value="<?= htmlspecialchars(get_csrf_token()) ?>">
       <div class="grid grid-2" style="gap:20px;">
